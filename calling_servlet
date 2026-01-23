@@ -1,0 +1,53 @@
+//-----Calling a servlet from another servlet-----
+
+//index.html --- same
+
+//AddServlet.java
+public class AddServlet extends HttpServlet 
+{
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		
+		int k = i+j;
+		k = k*k;
+		
+		RequestDispatcher rd = req.getRequestDispatcher("sq");
+		rd.forward(req, res);
+		}	
+
+}
+
+
+
+//SqServlet.java
+package com.demo;
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class SqServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
+	{
+		PrintWriter out = res.getWriter();
+		out.println("Hello here");
+	}
+	
+}
+
+
+
+//web.xml
+<servlet>
+	<servlet-name>Forward</servlet-name>
+	<servlet-class>com.demo.SqServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>Forward</servlet-name>
+	<url-pattern>/sq</url-pattern>
+</servlet-mapping>
