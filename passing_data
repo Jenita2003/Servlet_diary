@@ -1,0 +1,42 @@
+//-----passing data while calling servlet-----
+
+//index.html --- same
+
+//AddServlet.java
+package com.demo;
+
+public class AddServlet extends HttpServlet 
+{
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		
+		int k = i+j; //the nums are being summed here and sent to another servlet
+
+		req.setAttribute("k", k);
+		
+		RequestDispatcher rd = req.getRequestDispatcher("sq");
+		rd.forward(req, res);
+		}	
+
+}
+
+
+
+//SqServlet.java
+package com.demo;
+
+public class SqServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
+	{
+		
+		int k = (int) req.getAttribute("k");
+		
+		k = k*k; //the summed nums are being squared and witten in res
+		
+		PrintWriter out = res.getWriter();
+		out.println("The result is: " + k);
+	}
+	
+}
