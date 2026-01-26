@@ -1,0 +1,34 @@
+//AddServlet.java
+
+public class AddServlet extends HttpServlet 
+{
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		
+		int k = i+j;
+
+		HttpSession session = req.getSession();
+		session.setAttribute("k",k);  //stores the val in server before redirecting
+		
+		res.sendRedirect("sq?k=" +k);   //responds to the browser with an instruction
+	}
+
+}
+
+
+
+//SqServlet.java
+public class SqServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
+	{
+		HttpSession session = req.getSession();
+		int k = (int) session.getAttribute("k"); 
+		
+		k = k*k;
+		
+		PrintWriter out = res.getWriter();
+		out.println("The result is: " + k);
+	}
+}
