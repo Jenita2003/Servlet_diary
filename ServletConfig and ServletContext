@@ -1,0 +1,48 @@
+//MyServlet.java
+public class MyServlet extends HttpServlet {
+   
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        
+    	res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+        out.println("Hi <br/>");
+
+        // ServletContext param
+        ServletContext ctx = getServletContext();
+        String str = ctx.getInitParameter("name");
+        out.println("Context param: " + str + "<br>");
+
+        // ServletConfig param
+        ServletConfig cfg = getServletConfig();
+        String s = cfg.getInitParameter("name");
+        out.println("Servlet param: " + s);
+
+        out.close();
+    }
+}
+
+
+
+//web.xml
+ <!-- Servlet Declaration -->
+    <servlet>
+        <servlet-name>myservlet</servlet-name>
+        <servlet-class>com.serv.MyServlet</servlet-class>
+        
+        <init-param>
+        	<param-name>name</param-name>
+        	<param-value>Hannah</param-value>
+        </init-param>
+    </servlet>
+
+    <!-- Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>myservlet</servlet-name>
+        <url-pattern>/myservlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Context Parameter -->
+    <context-param>
+        <param-name>name</param-name>
+        <param-value>Jenita Hannah</param-value>
+    </context-param>
