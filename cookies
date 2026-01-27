@@ -1,0 +1,41 @@
+//AddServlet.java
+@WebServlet("/add")
+public class AddServlet extends HttpServlet 
+{
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		
+		int k = i+j;
+
+		Cookie cookie = new Cookie("k", k + "");
+		res.addCookie(cookie);
+		
+		res.sendRedirect("sq?k=" +k);   //responds to the browser with an instruction
+	}
+
+}
+
+
+
+//SqServlet.java
+@WebServlet("/sq")
+public class SqServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
+	{
+		int k = 0;
+		Cookie cookies[] = req.getCookies();
+		
+		for(Cookie c : cookies)
+		{
+			if(c.getName().equals("k"))
+				k = Integer.parseInt(c.getValue());
+		}
+		
+		k = k*k;
+		
+		PrintWriter out = res.getWriter();
+		out.println("The result is: " + k);
+	}
+}
