@@ -24,24 +24,13 @@ public class AddServlet extends HttpServlet
 
 
 //SqServlet
-import java.io.IOException;
+public class SqServlet extends HttpServlet {
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        int k = Integer.parseInt(req.getParameter("k")); // get sum from AddServlet
+        int sq= k * k;
 
-
-public class AddServlet extends HttpServlet 
-{
-
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
-		int i = Integer.parseInt(req.getParameter("num1"));
-		int j = Integer.parseInt(req.getParameter("num2"));
-		
-		int k = i+j;
-
-		res.sendRedirect("sq?k=" +k);   //responds to the browser with an instruction
-	}
-
+        PrintWriter out = res.getWriter();
+        out.println(sq);
+    }
 }
