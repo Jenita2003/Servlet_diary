@@ -1,0 +1,59 @@
+//DemoServlet.java
+@WebServlet("/demo")
+public class DemoServlet extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		
+	      Student s = new Student(1, "Jenita");
+		
+        request.setAttribute("student", s);
+        RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+        rd.forward(request, response);
+	}
+}
+
+
+
+//home.jsp
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	${student.name}
+</body>
+</html>
+
+
+
+//Student.java
+package com.pac;
+
+public class Student {
+
+	 int rollno;
+	 String name;
+	 
+	 Student(int rollno, String name){
+		 this.rollno = rollno;
+		 this.name = name;
+	 }
+
+	 public int getRollno() {
+		 return rollno;
+	 }
+
+	 public void setRollno(int rollno) {
+		 this.rollno = rollno;
+	 }
+
+	 public String getName() {
+		 return name;
+	 }
+
+	 public void setName(String name) {
+		 this.name = name;
+	 }
+}
+
