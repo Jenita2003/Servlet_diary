@@ -1,0 +1,100 @@
+----- Login without using session -----
+
+//login.jsp
+<body>
+	<form action = "Login">
+		Enter username : <input type = "text" name = "uname"><br>
+		Enter password : <input type = "text" name = "pass"><br>
+		<input type = "submit" value = "login">	
+	</form>
+</body>
+</html>
+
+
+
+//Login.java
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uname = request.getParameter("uname");
+		String pass = request.getParameter("pass");
+		
+		if(uname.equals("Jenita") && pass.equals("jeni123"))
+		{
+			response.sendRedirect("welcome.jsp");
+		}
+	}
+}
+
+
+
+//welcome.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	WELCOME...
+</body>
+</html>
+
+
+----- Login using session -----
+
+//login.jsp --- same
+
+//welcome.jsp
+<body>
+
+	<%
+		if(session.getAttribute("username") == null)
+		{
+			response.sendRedirect("login.jsp");
+		}
+	%>
+	WELCOME ${username}  !!! <br>
+	
+	<a href = "videos.jsp">Videos here</a>
+	
+	<form action = "Logout">
+		<input type = "submit"  value = "Logout">
+	</form>
+	
+	
+</body>
+</html>
+
+
+//login.java --- same
+
+
+//logout.java
+@WebServlet("/Logout")
+public class Logout extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		session.removeAttribute("username");
+		session.invalidate();
+		response.sendRedirect("Thanks.jsp");
+	}
+}
+
+
+
+//Thanks.jsp
+<body>
+	Thank you for using our site <br>
+	           See you again  !!! <br><br>
+	           
+	<form action = "login.jsp">
+		<input type = "submit"  value = "Login">
+	</form>
+	
+</body>
