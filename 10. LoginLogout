@@ -4,7 +4,7 @@
 <body>
 	<form action = "Login">
 		Enter username : <input type = "text" name = "uname"><br>
-		Enter password : <input type = "text" name = "pass"><br>
+		Enter password : <input type = "password" name = "pass"><br>
 		<input type = "submit" value = "login">	
 	</form>
 </body>
@@ -51,8 +51,9 @@ public class Login extends HttpServlet {
 
 //welcome.jsp
 <body>
-
 	<%
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		
 		if(session.getAttribute("username") == null)
 		{
 			response.sendRedirect("login.jsp");
@@ -60,15 +61,13 @@ public class Login extends HttpServlet {
 	%>
 	WELCOME ${username}  !!! <br>
 	
-	<a href = "videos.jsp">Videos here</a>
+	<a href = "videos.jsp">Videos here</a><br><br>
 	
 	<form action = "Logout">
 		<input type = "submit"  value = "Logout">
-	</form>
-	
-	
+	</form>	
 </body>
-</html>
+
 
 
 //login.java --- same
